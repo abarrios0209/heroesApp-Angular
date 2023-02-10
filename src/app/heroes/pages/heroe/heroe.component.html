@@ -1,0 +1,105 @@
+
+<mat-grid-list cols="1" *ngIf="!heroe; else divHeroe">
+    <mat-grid-tile>
+        <mat-spinner></mat-spinner>
+    </mat-grid-tile>
+</mat-grid-list>
+
+
+<ng-template #divHeroe>
+    
+    <div fxLayout="row"
+         fxLayout.xs="column"
+         fxLayoutGap="30px">
+         
+
+         <div fxFlex="20" fxLayout="row">
+            <div fxFlex="30">
+                <button mat-button
+                    color="warn"
+                    (click)="regresar()">
+                    Regresar
+                </button>
+            </div>
+            <div fxFlex>
+                <h1 style="margin-left: 10px;">{{ heroe.data.results[0].name }}</h1>
+             <br>
+             <img [src]="heroe | imagenU">
+            </div>
+         </div>
+
+         <div fxFlex="20">
+            
+             <mat-list>
+                <mat-list-item style="margin-bottom: 50px;"> <strong>Descripción:</strong> </mat-list-item>
+                <br>
+                <mat-list-item style="margin-bottom: 50px;"> 
+                    <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="30px">
+                        {{ heroe.data.results[0].description }} 
+                    </div>
+                </mat-list-item>
+                <br>
+                <mat-list-item> <strong>Fecha Ultima Modificacion:</strong></mat-list-item>
+                <mat-list-item>
+                    <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="30px">
+                        <div fxFlex>
+                            {{ heroe.data.results[0].modified | date }}
+                        </div>
+                    </div>
+                </mat-list-item>
+                <mat-list-item><strong>Stories</strong></mat-list-item>
+                <mat-list-item *ngFor="let storie of stories | slice:0:5"> 
+                    <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="30px">
+                        <div fxFlex>
+                            {{ storie }} 
+                        </div>
+                    </div>
+                </mat-list-item>
+             </mat-list>
+             
+             
+
+             <br>
+            </div>
+            <div fxFlex>
+                <mat-list>
+                   
+                    <div fxLayout="column">
+                        <div fxFlex style="text-align: center;">
+                            <strong>Comics:</strong>
+                            
+                        </div>
+                        <div fxFlex>
+                            <cdk-virtual-scroll-viewport appendOnly itemSize="50" style="height: calc(100vh - 250px);">
+                                <div *ngFor="let item of imagen; let i =index;" style="text-align: center;">
+                                    <div fxLayout="row" fxLayout.xs="column" >
+                                        <div fxFlex style="font-size: 15px;">
+                                            {{item.title}}
+                                            <br>
+                                            {{item.modified | date}}
+                                        </div>
+                                        <br>
+                                        <div fxFlex>
+                                            <img style="width:20%;" src={{item.thumbnail.path}}.jpg>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </cdk-virtual-scroll-viewport>
+                        </div>
+        
+                   </div>
+                </mat-list>
+            </div>
+            
+        </div>
+        
+        
+
+
+
+</ng-template>
+
+
+
+
